@@ -1,0 +1,19 @@
+{
+  "name": "forgotten",
+  "version": "1.0.0",
+  "description": "A game made with Phaser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peritract/forgotten.git"
+  },
+  "author": "Dan Keefe (Peritract)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peritract/forgotten/issues"
+  },
+  "homepage": "https://github.com/peritract/forgotten#readme"
+}
