@@ -4,7 +4,6 @@ import addPlayerAnimations from '../utilities/addPlayerAnimations.js';
 import controlPlayer from '../utilities/controlPlayer.js';
 import renderPlayer from '../utilities/renderPlayer.js';
 
-
 export class SimpleScene extends Phaser.Scene {
 	preload(){
 		this.load.spritesheet("Oubliette",oubliette_img, { frameWidth: 16, frameHeight: 16 });
@@ -13,6 +12,8 @@ export class SimpleScene extends Phaser.Scene {
 	create(){
 		addPlayerAnimations(this, "Oubliette");
 		this.player = addPlayer(this, 20, 30, "Oubliette");
+		let platforms = this.physics.add.staticGroup()
+		platforms.create(45,45,"Oubliette").setScale(3)
 	}
 	
 	update(){
