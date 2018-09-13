@@ -15,6 +15,7 @@ const gameConfig = {
     },	
 	width: 680,
 	height: 400,
+	//backgroundColor: "#ffffff",
 	scene: SimpleScene
 };
 
