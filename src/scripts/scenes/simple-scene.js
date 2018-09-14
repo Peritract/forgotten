@@ -53,14 +53,16 @@ export class SimpleScene extends Phaser.Scene {
 		this.map.createStaticLayer("foreground", this.map_layers, 0, 0);
 		
 		
-		// Add UI elements:
-		this.UI = new UI(this);
+		
 		
 		//Set the camera to follow the player
 		this.camera = this.cameras.main;
 		this.camera.setDeadzone(50,50);
-		this.camera.setZoom(2);
+		//this.camera.setZoom(2);
 		this.camera.startFollow(this.player.sprite, false, 0.8, 0.8);
+		
+		// Add UI elements:
+		this.UI = new UI(this);
 	}
 
 	update(){
