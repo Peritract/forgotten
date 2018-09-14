@@ -4,7 +4,7 @@ export default class UI{
 		this.elements  = scene.add.group();
 		
 		//Draw an opaque box where the UI elements should appear.
-		let rect = new Phaser.Geom.Rectangle(0, 0, 680, 22);
+		let rect = new Phaser.Geom.Rectangle(0, 0, 680, 28);
 		let graphics = scene.add.graphics({ fillStyle: { color: 0x000000 } });
 		graphics.fillRectShape(rect);
 		this.elements.add(graphics);
