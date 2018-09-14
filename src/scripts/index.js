@@ -2,21 +2,25 @@ import 'phaser'
 
 import '../styles/index.css';
 
-import {SimpleScene} from './scenes/simple-scene';
+import BootScene from './scenes/BootScene.js';
+import MainScene from './scenes/MainScene.js';
+import LevelScene from './scenes/LevelScene.js';
 
 const gameConfig = {
 	type: Phaser.AUTO,
 	physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 100 },
+            gravity: { y: 300 },
             debug: false
         }
     },
 	antialias: false, //Stops jittering on static layers when the camera moves.
 	width: 680,
 	height: 400,
-	scene: SimpleScene
+	scene: BootScene
 };
 
-new Phaser.Game(gameConfig);
+let game = new Phaser.Game(gameConfig);
+game.scene.add("MainScene", MainScene);
+game.scene.add("LevelScene", LevelScene);

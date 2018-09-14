@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/scripts/index.js',
@@ -11,8 +12,10 @@ module.exports = {
     new HtmlWebpackPlugin({
 		filename: "index.html",
 		template: './src/templates/index.html',
-		favicon: './src/assets/octo.ico'
-	})
+	}),
+	new CopyWebpackPlugin([
+    { from: 'src/assets', to: 'assets'}
+	])
   ],
   module: {
       rules: [

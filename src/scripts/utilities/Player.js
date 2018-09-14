@@ -1,62 +1,33 @@
 export default class Player {
-	constructor(scene, spritesheet, x, y){
+	constructor(scene, spritesheet, x, y, data=null){
 		this.spritesheet = spritesheet;
 		this.origin = [x,y];
 		this.keys = scene.input.keyboard.createCursorKeys();
-		
 		this.sprite = scene.physics.add.sprite(x, y, spritesheet);
 		this.sprite.setBounce(0);
 		
-		this.sprite.setSize(10, 16); //Make collisions look neater.
+		this.sprite.setSize(10, 10).setOffset(3,6).setDepth(1); //Make collisions look neater.
 		this.grounded = false;	
 		this.acceleration = 0;
-		this.jump_acceleration = 100;
+		this.jump_acceleration = 200;
 		
 		this.lives = 3;
+		if (data.lives){
+			this.lives = data.lives;
+		}
 		this.score = 0;
+		if (data.score){
+			this.score = data.score;
+		}
+		this.keys_held = 0;
 		this.dead = false;
-		
-		this.setupAnimations(scene, spritesheet);
-	}
-	
-	setupAnimations(scene, spritesheet){
-		scene.anims.create({
-			key: 'player-walk',
-			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 56, end: 57 }),
-			frameRate: 2,
-			repeat: -1
-		})
-
-		scene.anims.create({key: 'player-idle',
-			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 56, end: 57 }),
-			frameRate: 2,
-			repeat: -1
-		})
-		
-		scene.anims.create({key: 'player-fall',
-			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 59, end: 59 }),
-			frameRate: 1,
-			repeat: -1
-		})
-		
-		scene.anims.create({key: 'player-jump',
-			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 58, end: 58}), 
-			frameRate: 1,
-			repeat: -1
-		})
-		
-		scene.anims.create({key: 'player-death',
-			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 60, end: 61}), 
-			frameRate: 1,
-			repeat: 0
-		})
+		this.mode = "normal"; //tracks when the scene needs changing.
 	}
 	
 	control(){
 		if (!this.dead){
 			this.grounded = (this.sprite.body.onFloor() || this.sprite.body.touching.down)
-			this.acceleration = this.grounded ? 100 : 50;
-			
+			this.acceleration = this.grounded ? 150 : 75;
 			if (this.keys.left.isDown){
 				this.sprite.setVelocityX(-this.acceleration);
 				this.sprite.flipX = false;
@@ -91,15 +62,20 @@ export default class Player {
 	}
 	
 	collect(item){
-		let num = 10;
-		this.score += num
+		if (item.name == "coin"){
+			this.score += 10;
+		} else if (item.name == "life"){
+			this.lives += 1;
+		} else if (item.name == "key"){
+			this.keys_held += 1;
+		}
 		item.destroy();
-		console.log(this.score);
 	}
 	
 	die(){
 		if (!this.dead){
 			this.sprite.anims.play('player-death', true);
+			this.sprite.setVelocityX(0)
 			this.dead = true;
 			this.lives -= 1;
 			setTimeout(function(){
@@ -108,15 +84,14 @@ export default class Player {
 					this.sprite.y = this.origin[1];
 					this.dead = false;
 				} else {
-
 					this.destroy()
 				}
-			}.bind(this),2000);
+			}.bind(this),2500);
 		}
 	}
 	
 	destroy(){
 		this.sprite.destroy();
+		this.mode = "destroyed";
 	}
-	
 }

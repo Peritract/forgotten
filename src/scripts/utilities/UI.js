@@ -4,7 +4,7 @@ export default class UI{
 		this.elements  = scene.add.group();
 		
 		//Draw an opaque box where the UI elements should appear.
-		let rect = new Phaser.Geom.Rectangle(0, 0, 680, 28);
+		let rect = new Phaser.Geom.Rectangle(0, 0, 680, 24);
 		let graphics = scene.add.graphics({ fillStyle: { color: 0x000000 } });
 		graphics.fillRectShape(rect);
 		this.elements.add(graphics);
@@ -19,16 +19,23 @@ export default class UI{
 		
 		//A sprite to represent lives, and a starting number of 0.
 		this.elements.create(60, 7, "playerSprite").anims.play('player-idle');
-		let liveboard = scene.add.text(70, 4, '00', { fontSize: '16px', fill: '#fff' });
+		let liveboard = scene.add.text(70, 4, '00', { fontSize: '14px', fill: '#fff' });
 		liveboard.name = "liveboard";
 		this.elements.add(liveboard);
+		
+		//A sprite to represent keys, and a starting number of 0.
+		this.elements.create(105, 10, "playerSprite").anims.play('key');
+		let keyboard = scene.add.text(115, 4, '0', { fontSize: '14px', fill: '#fff' });
+		keyboard.name = "keyboard";
+		this.elements.add(keyboard);
 		
 		//Important properties for updating things.
 		this.score = 0;
 		this.lives = 0;
+		this.keys = 0;
 		
 		for (let i = 0; i < this.elements.children.entries.length; i++){
-			this.elements.children.entries[i].setScrollFactor(0);
+			this.elements.children.entries[i].setScrollFactor(0).setDepth(3);
 		}
 	}
 	
@@ -58,8 +65,23 @@ export default class UI{
 		this.elements.children.entries.filter(obj => obj.name == "liveboard")[0].setText(parsed_lives);
 	}
 	
+	update_keys(new_keys){
+		if (this.keys < new_keys){
+			this.keys += 1;
+		} else if (this.keys > new_keys){
+			this.keys -= 1;
+		}
+		let parsed_keys = this.keys;
+		if (this.keys > 9){
+			parsed_keys = "9";
+		}
+		this.elements.children.entries.filter(obj => obj.name == "keyboard")[0].setText(parsed_keys);
+	}
+	
+	
 	updateAll(data){
 		this.update_lives(data.lives);
 		this.update_score(data.score);
+		this.update_keys(data.keys_held);
 	}
 }
