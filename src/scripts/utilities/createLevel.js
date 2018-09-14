@@ -11,5 +11,4 @@ export default function createLevel(scene, tileset_key, tileset_name, tileset_ta
 	//the third one, midground, actually adds the map with images to the playable scene. 
 	scene.map = scene.make.tilemap({ key: tileset_key, tileWidth: 16, tileHeight: 16 });
 	scene.map_layers = scene.map.addTilesetImage(tileset_name, tileset_tag);
-	scene.midground = scene.map.createStaticLayer("Midground", scene.map_layers, 0, 0);
 }

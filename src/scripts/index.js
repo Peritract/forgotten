@@ -9,16 +9,14 @@ const gameConfig = {
 	physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 100 },
             debug: false
         }
-    },	
+    },
+	antialias: false, //Stops jittering on static layers when the camera moves.
 	width: 680,
 	height: 400,
-	//backgroundColor: "#ffffff",
 	scene: SimpleScene
 };
 
 new Phaser.Game(gameConfig);
-
-console.log("connected")
