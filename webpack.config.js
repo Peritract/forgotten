@@ -1,3 +1,4 @@
+const webpack = require("webpack")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -9,6 +10,10 @@ module.exports = {
   },
   mode: 'development',
   plugins: [
+	new webpack.DefinePlugin({
+            'CANVAS_RENDERER': JSON.stringify(true),
+            'WEBGL_RENDERER': JSON.stringify(true)
+        }),  
     new HtmlWebpackPlugin({
 		filename: "index.html",
 		template: './src/templates/index.html',
