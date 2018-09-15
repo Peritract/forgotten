@@ -4,7 +4,7 @@ export default class UI{
 		this.elements  = scene.add.group();
 		
 		//Draw an opaque box where the UI elements should appear.
-		let rect = new Phaser.Geom.Rectangle(0, 0, 680, 24);
+		let rect = new Phaser.Geom.Rectangle(0, 0, 680, 21);
 		let graphics = scene.add.graphics({ fillStyle: { color: 0x000000 } });
 		graphics.fillRectShape(rect);
 		this.elements.add(graphics);
@@ -13,21 +13,26 @@ export default class UI{
 		
 		//A sprite to represent the score/coins, and a starting number of 0.
 		this.elements.create(10, 10, "playerSprite").anims.play('coin-spin');
-		let scoreboard = scene.add.text(20, 4, '000', { fontSize: '14px', fill: '#fff' });
+		let scoreboard = scene.add.text(20, 4, '000', { fontSize: '16px', fill: '#fff' });
 		scoreboard.name = "scoreboard";
 		this.elements.add(scoreboard);
 		
 		//A sprite to represent lives, and a starting number of 0.
 		this.elements.create(60, 7, "playerSprite").anims.play('player-idle');
-		let liveboard = scene.add.text(70, 4, '00', { fontSize: '14px', fill: '#fff' });
+		let liveboard = scene.add.text(70, 4, '00', { fontSize: '16px', fill: '#fff' });
 		liveboard.name = "liveboard";
 		this.elements.add(liveboard);
 		
 		//A sprite to represent keys, and a starting number of 0.
-		this.elements.create(105, 10, "playerSprite").anims.play('key');
-		let keyboard = scene.add.text(115, 4, '0', { fontSize: '14px', fill: '#fff' });
+		this.elements.create(105, 11, "playerSprite").anims.play('key');
+		let keyboard = scene.add.text(115, 4, '0', { fontSize: '16px', fill: '#fff' });
 		keyboard.name = "keyboard";
 		this.elements.add(keyboard);
+		
+		//A message board text object, to hold information from various places.
+		let messageboard = scene.add.text(130, 4, '', { fontSize: '16px', fill: '#fff' });
+		messageboard.name = "messageboard";
+		this.elements.add(messageboard);
 		
 		//Important properties for updating things.
 		this.score = 0;
@@ -76,6 +81,10 @@ export default class UI{
 			parsed_keys = "9";
 		}
 		this.elements.children.entries.filter(obj => obj.name == "keyboard")[0].setText(parsed_keys);
+	}
+	
+	set_message(message){
+		this.elements.children.entries.filter(obj => obj.name == "messageboard")[0].setText(message);
 	}
 	
 	

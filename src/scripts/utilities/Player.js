@@ -73,20 +73,36 @@ export default class Player {
 	}
 	
 	die(){
-		if (!this.dead){
-			this.sprite.anims.play('player-death', true);
-			this.sprite.setVelocityX(0)
-			this.dead = true;
+		this.sprite.setVelocityX(0);
+		this.sprite.setVelocityY(0);
+		
+		setTimeout(function(){
 			this.lives -= 1;
-			setTimeout(function(){
-				if (this.lives > 0){
-					this.sprite.x = this.origin[0];
-					this.sprite.y = this.origin[1];
-					this.dead = false;
-				} else {
-					this.destroy()
-				}
-			}.bind(this),2500);
+			if (this.lives > 0){
+				this.sprite.x = this.origin[0];
+				this.sprite.y = this.origin[1];
+				this.dead = false;
+			} else {
+				this.destroy()
+			}
+		}.bind(this),2500);
+	}
+	
+	killed(){
+		if (!this.dead){
+			this.dead = true;
+			this.sprite.anims.play('player-death', true);
+			this.sprite.setVelocityX(0);
+			this.sprite.setVelocityY(0);
+			this.die();
+		}
+	}
+	
+	fell(){
+		if (!this.dead){
+			this.dead = true;
+			this.sprite.anims.play('player-fall', true);
+			this.die();
 		}
 	}
 	

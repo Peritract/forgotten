@@ -37,6 +37,7 @@ export default class LevelScene extends Phaser.Scene {
 		this.fireGroup = this.physics.add.staticGroup();
 		this.collectGroup = this.physics.add.staticGroup();
 		this.doorGroup = this.physics.add.staticGroup();
+		this.voidGroup = this.physics.add.staticGroup();
 		
 		this.midground.forEachTile(tile => {
 			//check if each tile should be replaced with a sprite.
@@ -46,9 +47,9 @@ export default class LevelScene extends Phaser.Scene {
 		//Set collisions between objects & groups of objects.
 		this.physics.add.collider(this.player.sprite, this.midground); //makes blocks solid on map
 		this.physics.add.overlap(this.player.sprite, this.collectGroup, (a,b) => this.player.collect(b), null, this);
-		this.physics.add.overlap(this.player.sprite, this.fireGroup, () => this.player.die(), null, this);
+		this.physics.add.overlap(this.player.sprite, this.fireGroup, () => this.player.killed(), null, this);
 		this.physics.add.overlap(this.player.sprite, this.doorGroup, (a,b) => console.log(b.name, b.state), null, this);
-		
+		this.physics.add.overlap(this.player.sprite, this.voidGroup, (a,b) => this.player.fell(), null, this);
 		
 		//Create the foreground, should there be one. Tiles on this level appear
 		//in front of the player & other sprites.

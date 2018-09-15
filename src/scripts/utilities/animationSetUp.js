@@ -44,6 +44,13 @@ export default function animationSetUp(scene,spritesheet){
 	})
 	
 	scene.anims.create({
+			key: 'void',
+			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 39, end: 39 }),
+			frameRate: 1,
+			repeat: -1
+	})
+	
+	scene.anims.create({
 		key: 'player-walk',
 		frames: scene.anims.generateFrameNumbers(spritesheet, { start: 56, end: 57 }),
 		frameRate: 2,

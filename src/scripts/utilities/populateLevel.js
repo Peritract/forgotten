@@ -34,6 +34,9 @@
 			 door.anims.play("door-shut");
 			 door.state = "shut";
 		 }
+	 } else if (tile.index == 40){
+		 let Void = scene.voidGroup.create(x, y, "playerSprite");
+		 Void.anims.play("void");
 	 } else {
 		return;
 	 }
