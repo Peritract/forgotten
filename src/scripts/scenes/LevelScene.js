@@ -11,11 +11,11 @@ export default class LevelScene extends Phaser.Scene {
 
 	preload(){
 		//load the level in.
-		this.level_tag = "level_1"; //load first level as a default.
+		this.level_tag = 1; //load first level as a default.
 		if (this.data.level){
 			this.level_tag = this.data.level;
 		}
-		this.load.tilemapTiledJSON(this.level_tag, './assets/levels/' + this.level_tag + '.json')
+		this.load.tilemapTiledJSON(this.level_tag, './assets/levels/level_' + this.level_tag + '.json')
 	}
 	
 	create(){
@@ -49,7 +49,7 @@ export default class LevelScene extends Phaser.Scene {
 		//Set collisions between objects & groups of objects.
 		
 		//Player collisions
-		this.physics.add.collider(this.player.sprite, this.midground); //makes blocks solid on map
+		this.physics.add.collider(this.player.sprite, this.midground, (a,b) => this.player.checkWall(), null, this); //makes blocks solid on map
 		this.physics.add.overlap(this.player.sprite, this.collectGroup, (a,b) => this.player.collect(b), null, this);
 		this.physics.add.overlap(this.player.sprite, this.fireGroup, () => this.player.killed(), null, this);
 		this.physics.add.overlap(this.player.sprite, this.doorGroup, (a,b) => this.player.open(b), null, this);
@@ -69,7 +69,8 @@ export default class LevelScene extends Phaser.Scene {
 		//Set the camera to follow the player
 		this.camera = this.cameras.main;
 		this.camera.setDeadzone(50,50);
-		//this.camera.setZoom(2);
+		this.camera.setViewport(0,21,this.camera.width, this.camera.height - 21);
+		this.camera.setZoom(1.8);
 		this.camera.startFollow(this.player.sprite, false, 0.8, 0.8);
 		
 		// Add UI elements:
@@ -91,13 +92,17 @@ export default class LevelScene extends Phaser.Scene {
 		} else if (this.player.mode == "destroyed"){
 			this.scene.start("MainScene");
 		} else if (this.player.mode == "victory"){
-			console.log("right function");
 			let data  = {
 				lives: this.player.lives,
-				score: this.player.score
-			}			
-			console.log("victory!");
-			this.scene.start("LevelScene", data);
+				score: this.player.score,
+				level: this.level_tag + 1
+			}
+			this.input.keyboard.removeAllListeners();
+			if (data.level <= 1){ //Current highest level
+				this.scene.start("LevelScene", data);
+			} else {
+				this.scene.start("EndScene", data);
+			}
 		}
 	}
 }

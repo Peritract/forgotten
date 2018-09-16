@@ -34,6 +34,10 @@ export default class UI{
 		messageboard.name = "messageboard";
 		this.elements.add(messageboard);
 		
+		//A secondary camera to the main one, focused entirely on the UI, so that the main screen
+		//can be zoomed in. 
+		scene.cameras.add(0,0,scene.camera.width,21,false,"UI_CAM");
+		
 		//Important properties for updating things.
 		this.score = 0;
 		this.lives = 0;

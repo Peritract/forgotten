@@ -1,6 +1,6 @@
 export default class MainScene extends Phaser.Scene {
 	create(){
-		
+		this.cameras.main.setViewport(0,0,this.cameras.main.width, this.cameras.main.height + 21);
 		this.add.text(20,10,"Designed & Developed by Dan Keefe", { fontSize: '16px', fill: '#fff' })
 		this.add.text(20,40,"Art by Safwyl", { fontSize: '16px', fill: '#fff' })
 		this.add.text(20,70,"Made with Phaser 3", { fontSize: '16px', fill: '#fff' })

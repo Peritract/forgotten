@@ -4,12 +4,11 @@ export default class Player {
 		this.origin = [x,y];
 		this.keys = scene.input.keyboard.createCursorKeys();
 		this.sprite = scene.physics.add.sprite(x, y, spritesheet);
-		this.sprite.setBounce(0);
 		
 		this.sprite.setSize(10, 10).setOffset(3,6).setDepth(1); //Make collisions look neater.
 		this.grounded = false;	
 		this.acceleration = 0;
-		this.jump_acceleration = 200;
+		this.jump_acceleration = 180;
 		
 		this.lives = 3;
 		if (data.lives){
@@ -24,22 +23,26 @@ export default class Player {
 		this.mode = "normal"; //tracks when the scene needs changing.
 	}
 	
+	checkWall(){
+		if (!this.grounded){
+			if (this.sprite.body.blocked.right || this.sprite.body.blocked.left){
+				this.wall_jump = true;
+			}
+			else {
+				this.wall_jump = false;
+			}
+		} else {
+			this.wall_jump = false;
+		}
+		console.log(this.wall_jump);
+	}
+	
 	control(){
 		if (!this.dead){
-			this.grounded = (this.sprite.body.onFloor() || this.sprite.body.touching.down)
+			this.grounded = (this.sprite.body.onFloor() || this.sprite.body.blocked.down)
 			this.acceleration = this.grounded ? 150 : 75;
-			
-			if ((this.keys.space.isDown || this.keys.up.isDown) && this.grounded){
-				this.sprite.setVelocityY(-this.jump_acceleration);
-			} else if ((this.keys.space.isDown || this.keys.up.isDown) && !this.grounded){
-				if (this.sprite.body.blocked.right && this.keys.right.isDown){
-					this.sprite.setVelocityY(-this.jump_acceleration / 1.3);
-					this.sprite.setVelocityX(-this.acceleration * 1.8);
-				} else if (this.sprite.body.blocked.left && this.keys.left.isDown){
-					this.sprite.setVelocityY(-this.jump_acceleration / 1.3);
-					this.sprite.setVelocityX(this.acceleration * 1.8);
-				}
-			} else {
+			this.body.gravity.y = this.wall_jump ? -30 : 0;
+			if (this.grounded){
 				if (this.keys.left.isDown){
 					this.sprite.setVelocityX(-this.acceleration);
 					this.sprite.flipX = false;
@@ -48,7 +51,37 @@ export default class Player {
 					this.sprite.flipX = true;
 				} else if (this.grounded) {
 					this.sprite.setVelocityX(0);
-				}			
+				}
+				if (this.keys.up.isDown){
+					this.sprite.setVelocityY(-this.jump_acceleration);
+				}
+			} else {
+				if (this.wall_jump && this.keys.up.isDown && this.keys.left.isDown){
+					//check for left wall jump
+					if (!this.sprite.body.blocked.left){
+						console.log("l w jump")
+						this.sprite.setVelocityY(-this.jump_acceleration)
+						this.sprite.setVelocityX(-this.acceleration);
+						this.wall_jump = false;
+					}
+				} else if (this.wall_jump && this.keys.up.isDown && this.keys.right.isDown){
+					if (!this.sprite.body.blocked.right){
+						console.log("r w jump")
+						this.sprite.setVelocityY(-this.jump_acceleration)
+						this.sprite.setVelocityX(this.acceleration);
+					this.wall_jump = false;
+					}
+				} else {
+					if (this.keys.left.isDown){
+						this.sprite.setVelocityX(-this.acceleration);
+						this.sprite.flipX = false;
+					} else if (this.keys.right.isDown){
+						this.sprite.setVelocityX(this.acceleration);
+						this.sprite.flipX = true;
+					} else if (this.grounded) {
+						this.sprite.setVelocityX(0);
+					}
+				}
 			}
 		}
 	}
@@ -56,10 +89,8 @@ export default class Player {
 	render(){
 		if (!this.dead){
 			if (this.grounded){
-				if (this.sprite.body.velocity.x != 0){
+				if (this.sprite.anims.currentAnim != "player-walk"){
 					this.sprite.anims.play('player-walk', true);
-				} else {
-					this.sprite.anims.play('player-idle', true);
 				}
 			} else {
 				if (this.sprite.body.velocity.y < 0){
@@ -122,7 +153,6 @@ export default class Player {
 			door.state = "open";
 			this.keys_held == 0;
 		} else if (door.state == "open"){
-			console.log("passing through");
 			this.mode = "victory";
 		}
 	}
