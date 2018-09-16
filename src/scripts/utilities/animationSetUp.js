@@ -80,4 +80,16 @@ export default function animationSetUp(scene,spritesheet){
 		frameRate: 2,
 		repeat: 0
 	})
+	
+	scene.anims.create({key: 'enemy-walk',
+		frames: scene.anims.generateFrameNumbers(spritesheet, { start: 40, end: 44}), 
+		frameRate: 3,
+		repeat: -1
+	})
+	
+	scene.anims.create({key: 'enemy-death',
+		frames: scene.anims.generateFrameNumbers(spritesheet, { start: 45, end: 45}), 
+		frameRate: 2,
+		repeat: 0
+	})
 }

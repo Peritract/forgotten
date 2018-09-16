@@ -38,6 +38,8 @@ export default class LevelScene extends Phaser.Scene {
 		this.collectGroup = this.physics.add.staticGroup();
 		this.doorGroup = this.physics.add.staticGroup();
 		this.voidGroup = this.physics.add.staticGroup();
+		this.enemyGroup = this.physics.add.group();
+		this.invisibleWallGroup = this.physics.add.staticGroup();
 		
 		this.midground.forEachTile(tile => {
 			//check if each tile should be replaced with a sprite.
@@ -45,11 +47,20 @@ export default class LevelScene extends Phaser.Scene {
 		});
 	
 		//Set collisions between objects & groups of objects.
+		
+		//Player collisions
 		this.physics.add.collider(this.player.sprite, this.midground); //makes blocks solid on map
 		this.physics.add.overlap(this.player.sprite, this.collectGroup, (a,b) => this.player.collect(b), null, this);
 		this.physics.add.overlap(this.player.sprite, this.fireGroup, () => this.player.killed(), null, this);
-		this.physics.add.overlap(this.player.sprite, this.doorGroup, (a,b) => console.log(b.name, b.state), null, this);
+		this.physics.add.overlap(this.player.sprite, this.doorGroup, (a,b) => this.player.open(b), null, this);
 		this.physics.add.overlap(this.player.sprite, this.voidGroup, (a,b) => this.player.fell(), null, this);
+		this.physics.add.overlap(this.player.sprite, this.enemyGroup, (a,b) => this.player.killed(), null, this);
+		
+		//Enemy collisions
+		this.physics.add.collider(this.enemyGroup, this.midground);
+		this.physics.add.overlap(this.enemyGroup, this.invisibleWallGroup, (a,b)=> a.soul.turn(), null, this);
+		this.physics.add.overlap(this.enemyGroup, this.fireGroup, (a,b) => a.soul.killed(), null, this);
+		this.physics.add.overlap(this.enemyGroup, this.voidGroup, (a,b) => a.soul.fell(), null, this);
 		
 		//Create the foreground, should there be one. Tiles on this level appear
 		//in front of the player & other sprites.
@@ -70,17 +81,22 @@ export default class LevelScene extends Phaser.Scene {
 			//Player update/render
 			this.player.control();
 			this.player.render();
-		
+
 			//Other update/render
+		for (let i = 0; i < this.enemyGroup.children.entries.length; i++){
+			this.enemyGroup.children.entries[i].soul.control();
+			}
 			this.UI.updateAll(this.player);
 			
 		} else if (this.player.mode == "destroyed"){
 			this.scene.start("MainScene");
 		} else if (this.player.mode == "victory"){
+			console.log("right function");
 			let data  = {
 				lives: this.player.lives,
 				score: this.player.score
 			}			
+			console.log("victory!");
 			this.scene.start("LevelScene", data);
 		}
 	}

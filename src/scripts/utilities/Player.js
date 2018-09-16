@@ -28,17 +28,27 @@ export default class Player {
 		if (!this.dead){
 			this.grounded = (this.sprite.body.onFloor() || this.sprite.body.touching.down)
 			this.acceleration = this.grounded ? 150 : 75;
-			if (this.keys.left.isDown){
-				this.sprite.setVelocityX(-this.acceleration);
-				this.sprite.flipX = false;
-			} else if (this.keys.right.isDown){
-				this.sprite.setVelocityX(this.acceleration);
-				this.sprite.flipX = true;
-			} else if (this.grounded) {
-				this.sprite.setVelocityX(0);
-			}
+			
 			if ((this.keys.space.isDown || this.keys.up.isDown) && this.grounded){
 				this.sprite.setVelocityY(-this.jump_acceleration);
+			} else if ((this.keys.space.isDown || this.keys.up.isDown) && !this.grounded){
+				if (this.sprite.body.blocked.right && this.keys.right.isDown){
+					this.sprite.setVelocityY(-this.jump_acceleration / 1.3);
+					this.sprite.setVelocityX(-this.acceleration * 1.8);
+				} else if (this.sprite.body.blocked.left && this.keys.left.isDown){
+					this.sprite.setVelocityY(-this.jump_acceleration / 1.3);
+					this.sprite.setVelocityX(this.acceleration * 1.8);
+				}
+			} else {
+				if (this.keys.left.isDown){
+					this.sprite.setVelocityX(-this.acceleration);
+					this.sprite.flipX = false;
+				} else if (this.keys.right.isDown){
+					this.sprite.setVelocityX(this.acceleration);
+					this.sprite.flipX = true;
+				} else if (this.grounded) {
+					this.sprite.setVelocityX(0);
+				}			
 			}
 		}
 	}
@@ -103,6 +113,17 @@ export default class Player {
 			this.dead = true;
 			this.sprite.anims.play('player-fall', true);
 			this.die();
+		}
+	}
+	
+	open(door){
+		if (door.state == "shut" && this.keys_held > 0){
+			door.anims.play("door-open", true);
+			door.state = "open";
+			this.keys_held == 0;
+		} else if (door.state == "open"){
+			console.log("passing through");
+			this.mode = "victory";
 		}
 	}
 	
