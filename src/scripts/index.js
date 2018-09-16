@@ -13,7 +13,7 @@ const gameConfig = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            debug: true
+            debug: false
         }
     },
 	antialias: false, //Stops jittering on static layers when the camera moves.

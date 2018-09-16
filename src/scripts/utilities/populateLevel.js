@@ -1,4 +1,6 @@
- import Enemy from '../utilities/Enemy.js';
+ import Enemy from './Enemy.js';
+ import getMessage from './getMessage.js';
+
  
  export default function populateLevel(scene, layer, tile){
 	 //takes a tile as an argument. If that tile 
@@ -41,8 +43,10 @@
 		 new Enemy(scene, "playerSprite", x, y);
 	 } else if (tile.index == 47){
 		 scene.invisibleWallGroup.create(x, y, "playerSprite", 46);
-	 } 
-	 else {
+	 } else if (tile.index == 32){
+		 let book = scene.messageGroup.create(x, y, "playerSprite", 31);
+		 book.message = getMessage();
+	 } else {
 		return;
 	 }
 	layer.removeTileAt(tile.x, tile.y);

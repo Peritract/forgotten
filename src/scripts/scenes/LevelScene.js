@@ -40,6 +40,7 @@ export default class LevelScene extends Phaser.Scene {
 		this.voidGroup = this.physics.add.staticGroup();
 		this.enemyGroup = this.physics.add.group();
 		this.invisibleWallGroup = this.physics.add.staticGroup();
+		this.messageGroup = this.physics.add.staticGroup();
 		
 		this.midground.forEachTile(tile => {
 			//check if each tile should be replaced with a sprite.
@@ -55,6 +56,7 @@ export default class LevelScene extends Phaser.Scene {
 		this.physics.add.overlap(this.player.sprite, this.doorGroup, (a,b) => this.player.open(b), null, this);
 		this.physics.add.overlap(this.player.sprite, this.voidGroup, (a,b) => this.player.fell(), null, this);
 		this.physics.add.overlap(this.player.sprite, this.enemyGroup, (a,b) => this.player.killed(), null, this);
+		this.physics.add.overlap(this.player.sprite, this.messageGroup, (a,b) => this.UI.setMessage(b.message), null, this);
 		
 		//Enemy collisions
 		this.physics.add.collider(this.enemyGroup, this.midground);
@@ -68,9 +70,9 @@ export default class LevelScene extends Phaser.Scene {
 		
 		//Set the camera to follow the player
 		this.camera = this.cameras.main;
-		this.camera.setDeadzone(50,50);
+		//this.camera.setDeadzone(50,50);
 		this.camera.setViewport(0,21,this.camera.width, this.camera.height - 21);
-		this.camera.setZoom(1.8);
+		this.camera.setZoom(1.6);
 		this.camera.startFollow(this.player.sprite, false, 0.8, 0.8);
 		
 		// Add UI elements:
@@ -97,7 +99,9 @@ export default class LevelScene extends Phaser.Scene {
 				score: this.player.score,
 				level: this.level_tag + 1
 			}
-			this.input.keyboard.removeAllListeners();
+			this.player.destroy();
+			this.player = null;
+			console.log(this.input.manager.queue);
 			if (data.level <= 1){ //Current highest level
 				this.scene.start("LevelScene", data);
 			} else {

@@ -42,6 +42,7 @@ export default class UI{
 		this.score = 0;
 		this.lives = 0;
 		this.keys = 0;
+		this.displayCount = 0; //how many frames the message will be displayed.
 		
 		for (let i = 0; i < this.elements.children.entries.length; i++){
 			this.elements.children.entries[i].setScrollFactor(0).setDepth(3);
@@ -87,14 +88,19 @@ export default class UI{
 		this.elements.children.entries.filter(obj => obj.name == "keyboard")[0].setText(parsed_keys);
 	}
 	
-	set_message(message){
+	setMessage(message){
 		this.elements.children.entries.filter(obj => obj.name == "messageboard")[0].setText(message);
+		this.displayCount = 25;
 	}
-	
 	
 	updateAll(data){
 		this.update_lives(data.lives);
 		this.update_score(data.score);
 		this.update_keys(data.keys_held);
+		if (this.displayCount > 0){
+			this.displayCount -= 1;
+		} else {
+			this.setMessage("");
+		}
 	}
 }
