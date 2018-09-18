@@ -1,5 +1,6 @@
 export default class Player {
-	constructor(scene, spritesheet, x, y, data=null){
+	constructor(scene, spritesheet, x, y, data){
+		this.scene = scene;
 		this.spritesheet = spritesheet;
 		this.origin = [x,y];
 		this.keys = scene.input.keyboard.createCursorKeys();
@@ -11,12 +12,12 @@ export default class Player {
 		this.wall_jump = "none";
 		
 		this.lives = 3;
-		if (data.lives){
-			this.lives = data.lives;
+		if (data.has("lives")){
+			this.lives = data.get("lives");
 		}
 		this.score = 0;
-		if (data.score){
-			this.score = data.score;
+		if (data.has("score")){
+			this.score = data.get("score");
 		}
 		this.keys_held = 0;
 		this.dead = false;
@@ -41,8 +42,9 @@ export default class Player {
 		if (!this.dead){
 			this.grounded = (this.sprite.body.onFloor() || this.sprite.body.blocked.down)
 			this.acceleration = this.grounded ? 150 : 75;
-			this.sprite.body.gravity.x = this.wall_jump == "right" ? -50 : 0;
-			this.sprite.body.gravity.x = this.wall_jump == "left" ? 50 : this.sprite.body.gravity.x;
+			this.sprite.body.gravity.x = this.wall_jump == "right" ? -10 : 0;
+			this.sprite.body.gravity.x = this.wall_jump == "left" ? 10 : this.sprite.body.gravity.x;
+			this.sprite.body.gravity.y = this.wall_jump != "none" ? -10 : 0;
 			if (this.grounded){
 				if (this.keys.left.isDown){
 					this.sprite.setVelocityX(-this.acceleration);
@@ -104,24 +106,26 @@ export default class Player {
 	
 	collect(item){
 		if (item.name == "coin"){
+			this.scene.coin_gain.play();
 			this.score += 10;
 		} else if (item.name == "life"){
+			this.scene.life_gain.play();
 			this.lives += 1;
 		} else if (item.name == "key"){
+			this.scene.key_gain.play();
 			this.keys_held += 1;
 		}
 		item.destroy();
 	}
 	
 	die(){
-		this.sprite.setVelocityX(0);
-		this.sprite.setVelocityY(0);
-		
 		setTimeout(function(){
 			this.lives -= 1;
 			if (this.lives > 0){
 				this.sprite.x = this.origin[0];
 				this.sprite.y = this.origin[1];
+				this.sprite.setVelocityX(0);
+				this.sprite.setVelocityY(0);
 				this.dead = false;
 			} else {
 				this.destroy()
@@ -142,6 +146,7 @@ export default class Player {
 	fell(){
 		if (!this.dead){
 			this.dead = true;
+			this.sprite.setVelocityX(0);
 			this.sprite.anims.play('player-fall', true);
 			this.die();
 		}

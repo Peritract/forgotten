@@ -5,22 +5,21 @@ import UI from '../utilities/UI.js';
 
 export default class LevelScene extends Phaser.Scene {
 	
-	init(data){
-		this.data = data; //store any information that has been passed in. 
-	}
-
 	preload(){
 		//load the level in.
-		this.level_tag = 1; //load first level as a default.
-		if (this.data.level){
-			this.level_tag = this.data.level;
-		}
-		this.load.tilemapTiledJSON(this.level_tag, './assets/levels/level_' + this.level_tag + '.json')
+		this.load.tilemapTiledJSON(this.registry.get("level"), './assets/levels/level_' + this.registry.get("level") + '.json')
+		
+		//Add the sound effect(s)
+		this.coin_gain = this.sound.add("coin_gain");
+		this.life_gain = this.sound.add("life_gain");
+		this.key_gain = this.sound.add("key_gain");
+		
+		this.input.enable(this);
 	}
 	
 	create(){
 		//Make the map and layers.
-		createLevel(this, this.level_tag,"oubliette-tileset-extruded","tileset");
+		createLevel(this, this.registry.get("level"), "oubliette-tileset-extruded","tileset");
 		
 		//Create the background, should there be one.
 		this.map.createStaticLayer("background", this.map_layers, 0, 0);
@@ -31,7 +30,7 @@ export default class LevelScene extends Phaser.Scene {
 		
 		//Create the player and place them at the level's spawn point
 		let player_origin = this.map.findObject("objects", obj => obj.name === "player_origin");
-		this.player = new Player(this, "playerSprite", player_origin.x, player_origin.y, this.data);
+		this.player = new Player(this, "playerSprite", player_origin.x, player_origin.y, this.registry);
 		
 		//Set collision groups for non-player objects.
 		this.fireGroup = this.physics.add.staticGroup();
@@ -70,9 +69,9 @@ export default class LevelScene extends Phaser.Scene {
 		
 		//Set the camera to follow the player
 		this.camera = this.cameras.main;
-		//this.camera.setDeadzone(50,50);
+		this.camera.setBounds(-16, -16, 51 * 16, 31 * 16);
 		this.camera.setViewport(0,21,this.camera.width, this.camera.height - 21);
-		this.camera.setZoom(1.6);
+		this.camera.setZoom(1.2);
 		this.camera.startFollow(this.player.sprite, false, 0.8, 0.8);
 		
 		// Add UI elements:
@@ -86,26 +85,33 @@ export default class LevelScene extends Phaser.Scene {
 			this.player.render();
 
 			//Other update/render
-		for (let i = 0; i < this.enemyGroup.children.entries.length; i++){
-			this.enemyGroup.children.entries[i].soul.control();
-			}
-			this.UI.updateAll(this.player);
-			
+			for (let i = 0; i < this.enemyGroup.children.entries.length; i++){
+				this.enemyGroup.children.entries[i].soul.control();
+				}
+				this.UI.updateAll(this.player);
+				
 		} else if (this.player.mode == "destroyed"){
-			this.scene.start("MainScene");
+			this.registry.set("score", this.player.score);
+			this.input.keyboard.shutdown();
+			this.input.disable(this);
+			this.scene.stop("LevelScene");
+			this.scene.start("EndScene", {victory: false});
+			
 		} else if (this.player.mode == "victory"){
-			let data  = {
-				lives: this.player.lives,
-				score: this.player.score,
-				level: this.level_tag + 1
-			}
-			this.player.destroy();
-			this.player = null;
-			console.log(this.input.manager.queue);
-			if (data.level <= 1){ //Current highest level
-				this.scene.start("LevelScene", data);
+			this.input.keyboard.shutdown();
+			this.input.keyboard.shutdown();
+			this.input.disable(this);
+			
+			this.player.mode = "transition"; //Phaser runs the update loop once more if you restart a scene, so make sure it can't do any damage.
+			this.registry.set("lives", this.player.lives);
+			this.registry.set("score", this.player.score);
+			this.registry.set("level", this.registry.get("level") + 1);	
+
+			if (this.registry.get("level") <= 3){ //Current highest level
+				this.scene.restart();
 			} else {
-				this.scene.start("EndScene", data);
+				this.scene.stop("LevelScene");
+				this.scene.start("EndScene", {victory: true});
 			}
 		}
 	}
