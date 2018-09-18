@@ -12,9 +12,10 @@ export default class MainScene extends Phaser.Scene {
 		let command = this.add.text(0,0,"Press any key to start", { fontSize: '16px', fill: '#fff' })
 		command.setPosition(this.cameras.main.width / 2 - command.width / 2, (this.cameras.main.height / 2 - command.height / 2) + 20)
 		this.input.keyboard.once('keydown', (event) => {
-			
-			this.scene.stop("MainScene");
-			this.scene.start('LevelScene');
+			setTimeout(function(){
+				this.scene.stop("MainScene");
+				this.scene.start('LevelScene');
+			}.bind(this), 1000);
 		});
 	}
 }

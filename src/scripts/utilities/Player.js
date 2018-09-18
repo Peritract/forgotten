@@ -44,7 +44,7 @@ export default class Player {
 			this.acceleration = this.grounded ? 150 : 75;
 			this.sprite.body.gravity.x = this.wall_jump == "right" ? -10 : 0;
 			this.sprite.body.gravity.x = this.wall_jump == "left" ? 10 : this.sprite.body.gravity.x;
-			this.sprite.body.gravity.y = this.wall_jump != "none" ? -10 : 0;
+			this.sprite.body.gravity.y = this.wall_jump != "none" ? -100 : 0;
 			if (this.grounded){
 				if (this.keys.left.isDown){
 					this.sprite.setVelocityX(-this.acceleration);

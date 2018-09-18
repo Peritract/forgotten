@@ -92,13 +92,15 @@ export default class LevelScene extends Phaser.Scene {
 				
 		} else if (this.player.mode == "destroyed"){
 			this.registry.set("score", this.player.score);
+			this.input.keyboard.stopListeners();
 			this.input.keyboard.shutdown();
 			this.input.disable(this);
 			this.scene.stop("LevelScene");
 			this.scene.start("EndScene", {victory: false});
 			
 		} else if (this.player.mode == "victory"){
-			this.input.keyboard.shutdown();
+			this.input.keyboard.stopListeners();
+			this.player.keys == null;
 			this.input.keyboard.shutdown();
 			this.input.disable(this);
 			
@@ -107,7 +109,7 @@ export default class LevelScene extends Phaser.Scene {
 			this.registry.set("score", this.player.score);
 			this.registry.set("level", this.registry.get("level") + 1);	
 
-			if (this.registry.get("level") <= 3){ //Current highest level
+			if (this.registry.get("level") <= 8){ //Current highest level
 				this.scene.restart();
 			} else {
 				this.scene.stop("LevelScene");

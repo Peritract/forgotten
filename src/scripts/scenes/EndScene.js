@@ -19,9 +19,11 @@ export default class EndScene extends Phaser.Scene {
 		
 		
 		this.input.keyboard.once('keydown', (event) => {
-			this.scene.stop('EndScene');
-			this.registry.reset();
-			this.scene.start('MainScene');
+			setTimeout(function(){
+				this.scene.stop('EndScene');
+				this.registry.reset();
+				this.scene.start('MainScene');
+			}.bind(this), 1000);
 		});
 	}
 }

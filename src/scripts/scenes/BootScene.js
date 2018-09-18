@@ -15,7 +15,8 @@ export default class BootScene extends Phaser.Scene {
 	create(){
 		//Set up animations to be used by all scenes. 
 		animationSetUp(this, "playerSprite");
-		this.sound.add("theme").play({loop: true});
-		this.scene.start("MainScene");
+		this.sound.add("theme").play({loop: true});		
+		
+		this.scene.start("MainScene");		
 	}
 }
