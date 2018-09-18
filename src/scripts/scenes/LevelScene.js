@@ -92,13 +92,18 @@ export default class LevelScene extends Phaser.Scene {
 				
 		} else if (this.player.mode == "destroyed"){
 			this.registry.set("score", this.player.score);
+			this.player.mode = "transition"; //Phaser runs the update loop once more if you restart a scene, so make sure it can't do any damage.
+			//Various attempts to stop extra events firing.
 			this.input.keyboard.stopListeners();
+			this.player.keys == null;
 			this.input.keyboard.shutdown();
 			this.input.disable(this);
+			
 			this.scene.stop("LevelScene");
 			this.scene.start("EndScene", {victory: false});
 			
 		} else if (this.player.mode == "victory"){
+			
 			this.input.keyboard.stopListeners();
 			this.player.keys == null;
 			this.input.keyboard.shutdown();
@@ -115,6 +120,8 @@ export default class LevelScene extends Phaser.Scene {
 				this.scene.stop("LevelScene");
 				this.scene.start("EndScene", {victory: true});
 			}
+		} else {
+			this.player = {mode: "transition"};
 		}
 	}
 }
