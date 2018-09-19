@@ -9,13 +9,21 @@ export default class MainScene extends Phaser.Scene {
 		
 		let title = this.add.text(0,0,"FORGOTTEN", { fontSize: '72px', fill: '#fff' })
 		title.setPosition(this.cameras.main.width / 2 - title.width / 2, (this.cameras.main.height / 2 - title.height / 2) -30)
-		let command = this.add.text(0,0,"Press any key to start", { fontSize: '16px', fill: '#fff' })
+		let command = this.add.text(0,0,"Press SPACE to start", { fontSize: '16px', fill: '#fff' })
 		command.setPosition(this.cameras.main.width / 2 - command.width / 2, (this.cameras.main.height / 2 - command.height / 2) + 20)
-		this.input.keyboard.once('keydown', (event) => {
+		
+		this.sound_info = this.add.text(0,0, (this.sound.mute ? "Press M to enable sound" : "Press M to disable sound"), { fontSize: '16px', fill: '#fff' })
+		this.sound_info.setPosition(this.cameras.main.width- this.sound_info.width - 20, this.cameras.main.height - this.sound_info.height - 35)
+		
+		this.input.keyboard.once('keydown_SPACE', (event) => {
 			setTimeout(function(){
-				this.scene.stop("MainScene");
 				this.scene.start('LevelScene');
-			}.bind(this), 1000);
+			}.bind(this), 800);
 		});
+	}
+	
+	update(){
+		this.sound_info.text = (this.sound.mute ? "Press M to enable sound" : "Press M to disable sound");
+		this.sound_info.setPosition(this.cameras.main.width- this.sound_info.width - 20, this.cameras.main.height - this.sound_info.height - 35)
 	}
 }

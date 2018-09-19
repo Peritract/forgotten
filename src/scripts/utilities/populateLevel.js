@@ -28,7 +28,7 @@
 		 key.name = "key";
 		 key.anims.play("key");
 	 } else if (tile.index == 27 || tile.index == 28){
-		 let door = scene.doorGroup.create(x, y, "playerSprite").setSize(11, 16).setOffset(3, 0);
+		 let door = scene.doorGroup.create(x, y, "playerSprite").setSize(8, 8).setOffset(4, 4);
 		 door.name = "door";
 		 door.state = "open";
 		 door.anims.play("door-open");

@@ -3,11 +3,11 @@ import animationSetUp from '../utilities/animationSetUp.js';
 
 export default class BootScene extends Phaser.Scene {
 	preload(){
-		//setup the progress bar
 		
-		let progressBar = this.add.graphics();
+		//setup the progress bar
+		let progressBar = this.add.graphics().setDepth(2); //Make the bar appear on top, not with.
 		let progressBox = this.add.graphics();
-		progressBox.fillStyle(0xffffff,0);
+		progressBox.fillStyle(0xffffff,1);
 		progressBox.fillRect(240, 190, 200, 20);
 		
 		//Load resources used by all scenes.
@@ -28,13 +28,31 @@ export default class BootScene extends Phaser.Scene {
 		this.load.audio("theme", "./assets/theme.wav")
 		this.load.spritesheet("playerSprite", './assets/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2});
 		this.load.image("tileset", './assets/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2}); 
+		
+		let max_level = 8
+		//load the level in.
+		for (let i = 1; i <= max_level; i++){
+			this.load.tilemapTiledJSON(i, './assets/levels/level_' + i + '.json')
+		}  
 	}
 	
 	create(){
+		//Set up sounds
+		this.sound.add("coin_gain");
+		this.sound.add("life_gain");
+		this.sound.add("key_gain");
+		
+		//Start the music
+		this.sound.play("theme");
+		
 		//Set up animations to be used by all scenes. 
 		animationSetUp(this, "playerSprite");
-		this.sound.add("theme").play({loop: true});		
 		
-		this.scene.start("MainScene");		
+		this.input.keyboard.on('keydown_M', function (event) {
+			this.sound.mute = !this.sound.mute;
+		}.bind(this));	
+		
+		this.scene.launch("MainScene");		
 	}
+	
 }

@@ -1,6 +1,7 @@
 export default class UI{
 	//Holder for all the UI elements. 
 	constructor(scene){
+		this.scene = scene;
 		this.elements  = scene.add.group();
 		
 		//Draw an opaque box where the UI elements should appear.
@@ -39,9 +40,9 @@ export default class UI{
 		scene.cameras.add(0,0,scene.camera.width,21,false,"UI_CAM");
 		
 		//Important properties for updating things.
-		this.score = 0;
-		this.lives = 0;
-		this.keys = 0;
+		this.score = scene.registry.has("score") ? scene.registry.get("score") : 0;
+		this.lives = scene.registry.has("lives") ? scene.registry.get("lives") : 3;
+		this.keys = scene.registry.has("keys") ? scene.registry.get("keys") : 0;
 		this.displayCount = 0; //how many frames the message will be displayed.
 		
 		for (let i = 0; i < this.elements.children.entries.length; i++){
@@ -51,6 +52,7 @@ export default class UI{
 	
 	update_score(new_score){
 		if (this.score < new_score){
+			this.scene.sound.play("coin_gain");
 			this.score += 1;
 		} else if (this.score > new_score){
 			this.score -= 1;
@@ -64,6 +66,7 @@ export default class UI{
 	
 	update_lives(new_lives){
 		if (this.lives < new_lives){
+			this.scene.sound.play("life_gain");
 			this.lives += 1;
 		} else if (this.lives > new_lives){
 			this.lives -= 1;
@@ -77,6 +80,7 @@ export default class UI{
 	
 	update_keys(new_keys){
 		if (this.keys < new_keys){
+			this.scene.sound.play("key_gain");
 			this.keys += 1;
 		} else if (this.keys > new_keys){
 			this.keys -= 1;
@@ -93,10 +97,10 @@ export default class UI{
 		this.displayCount = 25;
 	}
 	
-	updateAll(data){
-		this.update_lives(data.lives);
-		this.update_score(data.score);
-		this.update_keys(data.keys_held);
+	updateAll(registry){
+		this.update_lives(registry.lives);
+		this.update_score(registry.score);
+		this.update_keys(registry.keys_held);
 		if (this.displayCount > 0){
 			this.displayCount -= 1;
 		} else {

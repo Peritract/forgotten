@@ -5,18 +5,6 @@ import UI from '../utilities/UI.js';
 
 export default class LevelScene extends Phaser.Scene {
 	
-	preload(){
-		//load the level in.
-		this.load.tilemapTiledJSON(this.registry.get("level"), './assets/levels/level_' + this.registry.get("level") + '.json')
-		
-		//Add the sound effect(s)
-		this.coin_gain = this.sound.add("coin_gain");
-		this.life_gain = this.sound.add("life_gain");
-		this.key_gain = this.sound.add("key_gain");
-		
-		this.input.enable(this);
-	}
-	
 	create(){
 		//Make the map and layers.
 		createLevel(this, this.registry.get("level"), "oubliette-tileset-extruded","tileset");
@@ -80,6 +68,7 @@ export default class LevelScene extends Phaser.Scene {
 
 	update(){
 		if (this.player.mode == "normal"){
+			
 			//Player update/render
 			this.player.control();
 			this.player.render();
@@ -91,37 +80,21 @@ export default class LevelScene extends Phaser.Scene {
 				this.UI.updateAll(this.player);
 				
 		} else if (this.player.mode == "destroyed"){
+			//store the score, head to the game over scene
 			this.registry.set("score", this.player.score);
-			this.player.mode = "transition"; //Phaser runs the update loop once more if you restart a scene, so make sure it can't do any damage.
-			//Various attempts to stop extra events firing.
-			this.input.keyboard.stopListeners();
-			this.player.keys == null;
-			this.input.keyboard.shutdown();
-			this.input.disable(this);
-			
-			this.scene.stop("LevelScene");
 			this.scene.start("EndScene", {victory: false});
 			
 		} else if (this.player.mode == "victory"){
-			
-			this.input.keyboard.stopListeners();
-			this.player.keys == null;
-			this.input.keyboard.shutdown();
-			this.input.disable(this);
-			
-			this.player.mode = "transition"; //Phaser runs the update loop once more if you restart a scene, so make sure it can't do any damage.
+			//store necessary information, move on
 			this.registry.set("lives", this.player.lives);
 			this.registry.set("score", this.player.score);
 			this.registry.set("level", this.registry.get("level") + 1);	
 
 			if (this.registry.get("level") <= 8){ //Current highest level
-				this.scene.restart();
+				this.scene.start("LevelScene"); //next level
 			} else {
-				this.scene.stop("LevelScene");
-				this.scene.start("EndScene", {victory: true});
+				this.scene.start("EndScene", {victory: true}); //end of game
 			}
-		} else {
-			this.player = {mode: "transition"};
 		}
 	}
 }

@@ -22,6 +22,16 @@ export default class Player {
 		this.keys_held = 0;
 		this.dead = false;
 		this.mode = "normal"; //tracks when the scene needs changing.
+		
+		
+		//Tell the game the keys aren't pressed down
+		//This is important because sometimes Phaser forgets to update things.
+		//I have no idea why. 
+		this.keys.right.isDown = false;
+		this.keys.left.isDown = false;
+		this.keys.up.isDown = false;
+		
+		
 	}
 	
 	checkWall(){
@@ -52,7 +62,7 @@ export default class Player {
 				} else if (this.keys.right.isDown){
 					this.sprite.setVelocityX(this.acceleration);
 					this.sprite.flipX = true;
-				} else if (this.grounded) {
+				} else {
 					this.sprite.setVelocityX(0);
 				}
 				if (this.keys.up.isDown){
@@ -79,7 +89,7 @@ export default class Player {
 					} else if (this.keys.right.isDown){
 						this.sprite.setVelocityX(this.acceleration);
 						this.sprite.flipX = true;
-					} else if (this.grounded) {
+					} else {
 						this.sprite.setVelocityX(0);
 					}
 				}
@@ -106,13 +116,10 @@ export default class Player {
 	
 	collect(item){
 		if (item.name == "coin"){
-			this.scene.coin_gain.play();
 			this.score += 10;
 		} else if (item.name == "life"){
-			this.scene.life_gain.play();
 			this.lives += 1;
 		} else if (item.name == "key"){
-			this.scene.key_gain.play();
 			this.keys_held += 1;
 		}
 		item.destroy();

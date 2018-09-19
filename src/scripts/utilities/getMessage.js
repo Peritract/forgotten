@@ -1,5 +1,5 @@
 let messages = ["The moving finger writes, and having writ, moves on","Tomorrow and tomorrow and tomorrow", "It tolls for thee", "Mene, mene, tekel uphasim",
-"The lone and level sands stretch far away", "Eloi, Eloi, lema sabachthani", "Unto dust you shall return"]
+"The lone and level sands stretch far away", "Eloi, Eloi, lema sabachthani", "Unto dust you shall return", "Comfort thyself; what comfort is in me?", "There would have been a time for such a word"]
 
 function blankify(message){
 	let new_message = ""

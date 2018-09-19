@@ -12,18 +12,17 @@ export default class EndScene extends Phaser.Scene {
 		title.setPosition(this.cameras.main.width / 2 - title.width / 2, (this.cameras.main.height / 2 - title.height / 2) -30)
 		
 		let readout = this.add.text(0,0,"You gathered " + this.registry.get("score") + " coins", { fontSize: '16px', fill: '#fff' })
-		readout.setPosition(this.cameras.main.width / 2 - readout.width / 2, (this.cameras.main.height / 2 - readout.height / 2) + 20)
+		readout.setPosition(this.cameras.main.width / 2 - readout.width / 2, (this.cameras.main.height / 2 - readout.height / 2) + 10)
 		
-		let command = this.add.text(0,0,"Press any key", { fontSize: '16px', fill: '#fff' })
-		command.setPosition(this.cameras.main.width / 2 - command.width / 2, (this.cameras.main.height / 2 - command.height / 2) + 40)
+		let command = this.add.text(0,0,"Press SPACE to return to the menu", { fontSize: '16px', fill: '#fff' })
+		command.setPosition(this.cameras.main.width / 2 - command.width / 2, (this.cameras.main.height / 2 - command.height / 2) + 30)
 		
 		
-		this.input.keyboard.once('keydown', (event) => {
+		this.input.keyboard.once('keydown_SPACE', (event) => {
 			setTimeout(function(){
-				this.scene.stop('EndScene');
 				this.registry.reset();
 				this.scene.start('MainScene');
-			}.bind(this), 1000);
+			}.bind(this), 800);
 		});
 	}
 }
