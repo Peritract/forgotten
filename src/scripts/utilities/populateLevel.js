@@ -20,15 +20,13 @@
 		coin.name = "coin";
 		coin.anims.play('coin-spin');
 	 } else if (tile.index == 30){
-		 let life = scene.collectGroup.create(x, y, "playerSprite").setSize(4, 16).setOffset(6, 0);
+		 let life = scene.collectGroup.create(x, y, "playerSprite", tile.index - 1).setSize(4, 16).setOffset(6, 0);
 		 life.name = "life";
-		 life.anims.play("life");
 	 } else if (tile.index == 29){
-		 let key = scene.collectGroup.create(x, y, "playerSprite").setSize(11, 10).setOffset(2, 2);
+		 let key = scene.collectGroup.create(x, y, "playerSprite", tile.index - 1).setSize(11, 10).setOffset(2, 2);
 		 key.name = "key";
-		 key.anims.play("key");
 	 } else if (tile.index == 27 || tile.index == 28){
-		 let door = scene.doorGroup.create(x, y, "playerSprite").setSize(8, 8).setOffset(4, 4);
+		 let door = scene.doorGroup.create(x, y, "playerSprite").setSize(4, 1).setOffset(6, 15);
 		 door.name = "door";
 		 door.state = "open";
 		 door.anims.play("door-open");
@@ -37,14 +35,13 @@
 			 door.state = "shut";
 		 }
 	 } else if (tile.index == 40){
-		 let Void = scene.voidGroup.create(x, y, "playerSprite").setSize(16, 12).setOffset(0, 4);
-		 Void.anims.play("void");
+		 let Void = scene.voidGroup.create(x, y, "playerSprite", tile.index - 1).setSize(16, 12).setOffset(0, 4);
 	 } else if (tile.index == 41){
 		 new Enemy(scene, "playerSprite", x, y);
 	 } else if (tile.index == 47){
-		 scene.invisibleWallGroup.create(x, y, "playerSprite", 46);
+		 scene.invisibleWallGroup.create(x, y, "playerSprite", tile.index - 1).setSize(1,16).setOffset(7,0);
 	 } else if (tile.index == 32){
-		 let book = scene.messageGroup.create(x, y, "playerSprite", 31);
+		 let book = scene.messageGroup.create(x, y, "playerSprite", tile.index - 1);
 		 book.message = getMessage();
 	 } else {
 		return;

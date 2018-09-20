@@ -53,13 +53,13 @@ export default class LevelScene extends Phaser.Scene {
 		
 		//Create the foreground, should there be one. Tiles on this level appear
 		//in front of the player & other sprites.
-		this.map.createStaticLayer("foreground", this.map_layers, 0, 0).setDepth(2);
+		this.map.createStaticLayer("foreground", this.map_layers, 0, 0).setDepth(4);
 		
 		//Set the camera to follow the player
 		this.camera = this.cameras.main;
 		this.camera.setBounds(-16, -16, 51 * 16, 31 * 16);
 		this.camera.setViewport(0,21,this.camera.width, this.camera.height - 21);
-		this.camera.setZoom(1.2);
+		this.camera.setZoom(1.4);
 		this.camera.startFollow(this.player.sprite, false, 0.8, 0.8);
 		
 		// Add UI elements:

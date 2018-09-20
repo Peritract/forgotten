@@ -9,6 +9,7 @@ import EndScene from './scenes/EndScene.js';
 
 const gameConfig = {
 	type: Phaser.AUTO,
+	parent: "game",
 	physics: {
         default: 'arcade',
         arcade: {

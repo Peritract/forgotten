@@ -14,20 +14,6 @@ export default function animationSetUp(scene,spritesheet){
 			frameRate: 5,
 			repeat: -1
 	})
-	
-	scene.anims.create({
-			key: 'key',
-			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 28, end: 28 }),
-			frameRate: 5,
-			repeat: -1
-	})
-	
-	scene.anims.create({
-			key: 'life',
-			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 29, end: 29 }),
-			frameRate: 1,
-			repeat: -1
-	})
 
 	scene.anims.create({
 			key: 'door-open',
@@ -39,13 +25,6 @@ export default function animationSetUp(scene,spritesheet){
 	scene.anims.create({
 			key: 'door-shut',
 			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 26, end: 26 }),
-			frameRate: 1,
-			repeat: -1
-	})
-	
-	scene.anims.create({
-			key: 'void',
-			frames: scene.anims.generateFrameNumbers(spritesheet, { start: 39, end: 39 }),
 			frameRate: 1,
 			repeat: -1
 	})

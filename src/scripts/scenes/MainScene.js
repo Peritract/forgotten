@@ -5,7 +5,7 @@ export default class MainScene extends Phaser.Scene {
 		this.add.text(20,40,"Art by Safwyl", { fontSize: '16px', fill: '#fff' })
 		this.add.text(20,70,"Sound by Luke.RUSTLTD & sauer2", { fontSize: '16px', fill: '#fff' })
 		this.add.text(20,100,"Made with Phaser 3", { fontSize: '16px', fill: '#fff' })
-		this.registry.set("level", 1);
+		
 		
 		let title = this.add.text(0,0,"FORGOTTEN", { fontSize: '72px', fill: '#fff' })
 		title.setPosition(this.cameras.main.width / 2 - title.width / 2, (this.cameras.main.height / 2 - title.height / 2) -30)
@@ -14,6 +14,9 @@ export default class MainScene extends Phaser.Scene {
 		
 		this.sound_info = this.add.text(0,0, (this.sound.mute ? "Press M to enable sound" : "Press M to disable sound"), { fontSize: '16px', fill: '#fff' })
 		this.sound_info.setPosition(this.cameras.main.width- this.sound_info.width - 20, this.cameras.main.height - this.sound_info.height - 35)
+		
+		
+		this.registry.set("level", 1); //set starting level
 		
 		this.input.keyboard.once('keydown_SPACE', (event) => {
 			setTimeout(function(){

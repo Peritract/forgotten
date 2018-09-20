@@ -25,7 +25,7 @@ export default class UI{
 		this.elements.add(liveboard);
 		
 		//A sprite to represent keys, and a starting number of 0.
-		this.elements.create(105, 11, "playerSprite").anims.play('key');
+		this.elements.create(105, 11, "playerSprite", 28);
 		let keyboard = scene.add.text(115, 4, '0', { fontSize: '16px', fill: '#fff' });
 		keyboard.name = "keyboard";
 		this.elements.add(keyboard);

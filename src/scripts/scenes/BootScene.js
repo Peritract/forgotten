@@ -26,6 +26,10 @@ export default class BootScene extends Phaser.Scene {
 		this.load.audio("life_gain", './assets/life1.wav')
 		this.load.audio("key_gain", './assets/key1.wav')
 		this.load.audio("theme", "./assets/theme.wav")
+		
+		this.load.image("dust", './assets/dust.png')
+		this.load.image("blood", './assets/blood.png')
+		
 		this.load.spritesheet("playerSprite", './assets/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2});
 		this.load.image("tileset", './assets/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2}); 
 		
@@ -43,7 +47,7 @@ export default class BootScene extends Phaser.Scene {
 		this.sound.add("key_gain");
 		
 		//Start the music
-		this.sound.play("theme");
+		this.sound.play("theme", {loop: true});
 		
 		//Set up animations to be used by all scenes. 
 		animationSetUp(this, "playerSprite");
