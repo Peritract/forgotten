@@ -1,1 +1,3 @@
-A game built in Phaser, to help me learn Phaser. Also practice with webpack and node modules and command-line git.
+#Forgotten
+
+######A retro-styled 2D platformer game built in Phaser 3
