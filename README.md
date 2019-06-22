@@ -41,7 +41,7 @@ Actually constructing working levels is somewhat harder. Mostly, you want to edi
 #### Credits
 
 - Designed and developed by me, [Dan Keefe](https://peritract.github.io)
-- Graphics by [Safwyl](https://safwyl.itch.io/oubliette-tileset")
+- Graphics by [Safwyl](https://safwyl.itch.io/oubliette-tileset)
 - Sound by [Luke.RUSTLD](https://opengameart.org/content/10-8bit-coin-sounds) & [Sauer2](https://opengameart.org/content/dark-8bit-song)
 
 #### Comments and Criticism
