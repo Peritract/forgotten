@@ -12,11 +12,11 @@ This is a short platformer game that I made for two main reasons:
 
 2. To understand what Webpack is
 
-I find that I am much more *au fait* with both technologies now, and I have learnt a lot. It is only a short game, but I tried to fill it with all the standard platformer staples. I got to play with particle effects and compile HTML templates. 
+I find that I am much more *au fait* with both technologies now, and I have learnt a lot. It is only a short game, but I tried to fill it with all the standard platformer staples. I got to play with particle effects and compile HTML templates.
 
 #### Installation & use
 
-Download everything, and then run "npm install" from the command line in the relevant place. 
+Download everything, and then run "npm install" from the command line in the relevant place.
 
 - "npm run build" will pack all the source files together and output a playable game in /dist
 
@@ -46,4 +46,4 @@ Actually constructing working levels is somewhat harder. Mostly, you want to edi
 
 #### Comments and Criticism
 
-Please do get in touch if you love/hate it, or if you've made a bunch of new levels and would like them added to the main game. 
+Please do get in touch if you love/hate it, or if you've made a bunch of new levels and would like them added to the main game.
