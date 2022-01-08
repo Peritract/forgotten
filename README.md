@@ -34,7 +34,7 @@ Collect coins, lives and keys as you navigate through 8 levels displaying the va
 
 #### Adding levels
 
-Currently there are only eight levels, but it is easy to add more. Build your own using [Tiled](https://www.mapeditor.org) and the base_level file in /src/assets/levels. Name it level_[next number] and then increment the max_level counter in /src/scripts/scenes/BootScene.js and the last level before victory in /src/scripts/scenes/LevelScene.js. Once you've done that and repackaged everything, it should pick up those levels automatically and add them onto the end.
+Currently there are ten levels, but it is easy to add more. Build your own using [Tiled](https://www.mapeditor.org) and the base_level file in /src/assets/levels. Name it level_[next number] and then increment the max_level counter in /src/scripts/scenes/BootScene.js and the last level before victory in /src/scripts/scenes/LevelScene.js. Once you've done that and repackaged everything, it should pick up those levels automatically and add them onto the end.
 
 Actually constructing working levels is somewhat harder. Mostly, you want to edit the midground layer, as that contains all the things the player interacts with. Foreground and background displaying in front of and behind the player respectively. The game populates the level with objects determined by the midground tiles, so just drop in what you want to appear. For animated things, the first image is the trigger for the in-game object.
 
