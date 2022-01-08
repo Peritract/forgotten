@@ -34,7 +34,7 @@ export default class BootScene extends Phaser.Scene {
 		this.load.spritesheet("playerSprite", './assets/art/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2});
 		this.load.image("tileset", './assets/art/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2}); 
 		
-		let max_level = 9
+		let max_level = 10
 		//load the level in.
 		for (let i = 1; i <= max_level; i++){
 			this.load.tilemapTiledJSON(i, './assets/levels/level_' + i + '.json')

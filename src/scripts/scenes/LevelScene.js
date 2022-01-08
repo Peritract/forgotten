@@ -90,7 +90,7 @@ export default class LevelScene extends Phaser.Scene {
 			this.registry.set("score", this.player.score);
 			this.registry.set("level", this.registry.get("level") + 1);	
 
-			if (this.registry.get("level") <= 9){ //Current highest level
+			if (this.registry.get("level") <= 10){ //Current highest level
 				this.scene.start("LevelScene"); //next level
 			} else {
 				this.scene.start("EndScene", {victory: true}); //end of game
