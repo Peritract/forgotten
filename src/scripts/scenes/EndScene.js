@@ -18,7 +18,7 @@ export default class EndScene extends Phaser.Scene {
 		command.setPosition(this.cameras.main.width / 2 - command.width / 2, (this.cameras.main.height / 2 - command.height / 2) + 30)
 		
 		
-		this.input.keyboard.once('keydown_SPACE', (event) => {
+		this.input.keyboard.once('keydown-SPACE', (event) => {
 			setTimeout(function(){
 				this.registry.reset();
 				this.scene.start('MainScene');

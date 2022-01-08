@@ -47,7 +47,7 @@ export default class BootScene extends Phaser.Scene {
 		this.sound.add("key_gain");
 		
 		//Start the music
-		this.sound.play("theme", {loop: true});
+		this.sound.play("theme", {loop: true, volume: 0.2});
 		
 		//Set up animations to be used by all scenes. 
 		animationSetUp(this, "playerSprite");
