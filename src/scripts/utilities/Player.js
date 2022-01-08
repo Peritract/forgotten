@@ -167,6 +167,7 @@ export default class Player {
 			this.dead = true;
 			this.sprite.setVelocityX(0);
 			this.sprite.anims.play('player-fall', true);
+			this.audio.play("hurt");
 			this.die();
 		}
 	}
