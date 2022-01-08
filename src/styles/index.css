@@ -1,25 +1,2 @@
-body {
-	margin: 0;
-	padding: 3rem;
-	text-align: center;
-	height: 100%;
-	background-color: black;
-	font-family: "Courier New";
-}
-
-#game {
-    padding: 0;
-	border: 4px solid white;
-	margin: auto;
-	width: 680px;
-	height: 400px;
-}
-
-p {
-	color: white;
-}
-
-a{
-	color: #ac3232;
-	text-decoration: none;
+body { margin:0;
 }

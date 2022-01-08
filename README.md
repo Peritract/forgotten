@@ -22,7 +22,7 @@ Download everything, and then run "npm install" from the command line in the rel
 
 - "npm run serve" will start a dev server so you can make changes and watch them appear immediately at localhost:8080
 
-Webpack does everything automatically, so you only need the contents of /dist to actually play it. There is, of course, a playable version [here](https://peritract.github.io/forgotten).
+Webpack does everything automatically, so you only need the contents of /dist to actually play it.
 
 #### Playing
 
@@ -40,10 +40,10 @@ Actually constructing working levels is somewhat harder. Mostly, you want to edi
 
 #### Credits
 
-- Designed and developed by me, [Dan Keefe](https://peritract.github.io)
+- Designed and developed by Dan Keefe
 - Graphics by [Safwyl](https://safwyl.itch.io/oubliette-tileset)
-- Sound by [Luke.RUSTLD](https://opengameart.org/content/10-8bit-coin-sounds) & [Sauer2](https://opengameart.org/content/dark-8bit-song)
+- Sound by [GroovyMaster](https://groovymaster.itch.io/groovys-50-retro-sound-effects-package) & [Sauer2](https://opengameart.org/content/dark-8bit-song)
 
 #### Comments and Criticism
 
-Please do get in touch if you love/hate it, or if you've made a bunch of new levels and would like them added to the main game.
+Please do get in touch if you love/hate it, or if you've made a bunch of new levels and would like them added to the main game ((admittedly unlikely).
