@@ -6,6 +6,7 @@ export default class Player {
 		this.origin = [x,y];
 		this.keys = scene.input.keyboard.createCursorKeys();
 		this.sprite = scene.physics.add.sprite(x, y, spritesheet);
+		this.audio = scene.sound;
 		this.sprite.setSize(10, 10).setOffset(3,6).setDepth(1); //Make collisions look neater.
 		
 		particleSetUp(this, scene);
@@ -144,7 +145,7 @@ export default class Player {
 				this.sprite.setVelocityY(0);
 				this.dead = false;
 			} else {
-				this.destroy()
+				this.destroy();
 			}
 		}.bind(this),2500);
 	}
@@ -153,6 +154,7 @@ export default class Player {
 		if (!this.dead){
 			this.dead = true;
 			this.blood.emitParticleAt(this.sprite.x, this.sprite.y + 7);
+			this.audio.play("hurt");
 			this.sprite.anims.play('player-death', true);
 			this.sprite.setVelocityX(0);
 			this.sprite.setVelocityY(0);

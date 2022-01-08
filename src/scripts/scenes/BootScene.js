@@ -22,16 +22,17 @@ export default class BootScene extends Phaser.Scene {
 			progressBox.destroy();
 		});
 		
-		this.load.audio("coin_gain", './assets/coin1.wav')
-		this.load.audio("life_gain", './assets/life1.wav')
-		this.load.audio("key_gain", './assets/key1.wav')
-		this.load.audio("theme", "./assets/theme.wav")
+		this.load.audio("coin_gain", './assets/audio/coin.wav')
+		this.load.audio("life_gain", './assets/audio/life.wav')
+		this.load.audio("key_gain", './assets/audio/key.wav')
+		this.load.audio("hurt", "./assets/audio/hurt.wav")
+		this.load.audio("theme", "./assets/audio/theme.wav")
 		
-		this.load.image("dust", './assets/dust.png')
-		this.load.image("blood", './assets/blood.png')
+		this.load.image("dust", './assets/art/dust.png')
+		this.load.image("blood", './assets/art/blood.png')
 		
-		this.load.spritesheet("playerSprite", './assets/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2});
-		this.load.image("tileset", './assets/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2}); 
+		this.load.spritesheet("playerSprite", './assets/art/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2});
+		this.load.image("tileset", './assets/art/oubliette-tileset-extruded.png', { frameWidth: 16, frameHeight: 16, margin: 1, spacing: 2}); 
 		
 		let max_level = 8
 		//load the level in.
@@ -47,7 +48,7 @@ export default class BootScene extends Phaser.Scene {
 		this.sound.add("key_gain");
 		
 		//Start the music
-		this.sound.play("theme", {loop: true, volume: 0.2});
+		this.sound.play("theme", {loop: true, volume: 0.4});
 		
 		//Set up animations to be used by all scenes. 
 		animationSetUp(this, "playerSprite");

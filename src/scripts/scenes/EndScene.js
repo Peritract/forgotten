@@ -5,7 +5,7 @@ export default class EndScene extends Phaser.Scene {
 		
 		this.add.text(20,10,"Designed & Developed by Dan Keefe", { fontSize: '16px', fill: '#fff' })
 		this.add.text(20,40,"Art by Safwyl", { fontSize: '16px', fill: '#fff' })
-		this.add.text(20,70,"Sound by Luke.RUSTLTD & sauer2", { fontSize: '16px', fill: '#fff' })
+		this.add.text(20,70,"Sound by GroovyMaster & sauer2", { fontSize: '16px', fill: '#fff' })
 		this.add.text(20,100,"Made with Phaser 3", { fontSize: '16px', fill: '#fff' })
 				
 		let title = this.add.text(0,0, (info.victory ? "You have reached the end" : "You have failed, as all must"), { fontSize: '32px', fill: '#fff' })
