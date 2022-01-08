@@ -18,7 +18,7 @@ export default class MainScene extends Phaser.Scene {
 		
 		this.registry.set("level", 1); //set starting level
 		
-		this.input.keyboard.once('keydown_SPACE', (event) => {
+		this.input.keyboard.once('keydown-SPACE', (event) => {
 			setTimeout(function(){
 				this.scene.start('LevelScene');
 			}.bind(this), 800);

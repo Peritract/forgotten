@@ -52,7 +52,7 @@ export default class BootScene extends Phaser.Scene {
 		//Set up animations to be used by all scenes. 
 		animationSetUp(this, "playerSprite");
 		
-		this.input.keyboard.on('keydown_M', function (event) {
+		this.input.keyboard.on('keydown-M', function (event) {
 			this.sound.mute = !this.sound.mute;
 		}.bind(this));	
 		

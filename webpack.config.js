@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require("webpack")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -5,9 +6,14 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   entry: './src/scripts/index.js',
   output: {
-    path: __dirname + '/dist',
+    path: path.resolve(__dirname, 'dist'),  
     filename: 'index.bundle.js'
   },
+  devServer: {
+    static: path.resolve(__dirname, 'dist'),
+    compress: true,
+    port: 8080,
+ },
   mode: 'development',
   plugins: [
 	new webpack.DefinePlugin({
