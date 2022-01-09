@@ -1,15 +1,20 @@
-let messages = ["The moving finger writes, and having writ, moves on","Tomorrow and tomorrow and tomorrow", "It tolls for thee", "Mene, mene, tekel uphasim",
-"The lone and level sands stretch far away", "Eloi, Eloi, lema sabachthani", "Unto dust you shall return", "Comfort thyself; what comfort is in me?", "There would have been a time for such a word"]
+let messages = ["Where are you going?", "What are you searching for?", "There is nothing beyond this place.",
+				"Your efforts are wasted.", "Why do you persist?", "What do you hope for?",
+				"You cannot get out.", "You hope in vain.", "There is nothing but the void."]
 
-function blankify(message){
-	let new_message = ""
-	for (let i = 0; i < message.length; i++){
-		let num = Math.floor(Math.random() * 10);
-		new_message = new_message + (num > 7 ? [" ","."][Math.floor(Math.random() * 1)] : message[i]);
+function* messageGenerator(){
+	let index = 0;
+	while (true) {
+		yield messages[index];
+		index++;
+		if (index > messages.length) {
+			index = 0;
+		}
 	}
-	return new_message;
 }
 
+const generator = messageGenerator();
+
 export default function getMessage(){
-	return blankify(messages[Math.floor(Math.random() * messages.length)])
+	return generator.next().value;
 }
