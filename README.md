@@ -14,6 +14,8 @@ This is a short platformer game that I made for two main reasons:
 
 I find that I am much more *au fait* with both technologies now, and I have learnt a lot. It is only a short game, but I tried to fill it with all the standard platformer staples. I got to play with particle effects and compile HTML templates.
 
+[Play it here](https://peritract.itch.io/forgotten).
+
 #### Installation & use
 
 Download everything, and then run "npm install" from the command line in the relevant place.
